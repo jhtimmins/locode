@@ -105,3 +105,6 @@ venv.bak/
 
 #vagrant stuff
 .vagrant/
+
+#config
+*config.py
