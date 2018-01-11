@@ -2,6 +2,9 @@ import config
 import requests
 
 def validate(path):
+    """
+    Ensures path is cleaned before downloading. Returns repo or False if invalid.
+    """
     path = clean_path(path)
     repo = get_repo(path)
     if 'message' in repo and repo['message'] == 'Not Found':
@@ -10,7 +13,9 @@ def validate(path):
         return path
 
 def clean_path(path):
-    # Remove arguments that might be used for redirect
+    """
+    Remove non-essential path components.
+    """
     if '?' in path:
         path = path.split('?')[0]
 
@@ -26,6 +31,9 @@ def clean_path(path):
     return path
 
 def get_repo(path):
+    """
+    Downloads and returns a repo from github.
+    """
     url = "https://api.github.com/repos/" + path
     contents = requests.get(url, auth=(config.github['username'], config.github['password']))
     return contents.json()
